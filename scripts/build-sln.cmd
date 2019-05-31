@@ -1,0 +1,33 @@
+@ECHO OFF
+SETLOCAL ENABLEDELAYEDEXPANSION
+PUSHD %~dp0..
+SET ROOT=%CD%\
+
+SET BRANCH=
+FOR /F USEBACKQ %%G IN (`git branch ^| grep \* ^| cut -d ' ' -f2`) DO ( SET BRANCH=%%G )
+
+
+SET CONFIGURATION=
+IF "!BRANCH:~0,7!" EQU "release" ( 
+  SET CONFIGURATION=Release
+) ELSE IF "!BRANCH:~0,6!" EQU "master" (
+  SET CONFIGURATION=Release
+) ELSE (
+  SET CONFIGURATION=Debug
+)
+
+SET PLATFORM=x86
+SET ROOT
+IF "%~dp1" EQU "!ROOT!" (
+  SET MSBUILD_PROPS=Configuration=%CONFIGURATION%;Platform=!PLATFORM!
+) ELSE (
+  SET MSBUILD_PROPS=Configuration=%CONFIGURATION%;Platform=!PLATFORM!;SolutionDir=!ROOT!
+)
+
+CALL scripts\now BUILD_START
+ECHO [ BUILD START  ] %BUILD_START% ^> msbuild-%~nx1.%BUILD_START%.log
+CALL scripts\msbuild "%~nx1" /p:!MSBUILD_PROPS! > msbuild-%~nx1.%BUILD_START%.log
+CALL scripts\now BUILD_FINISH
+ECHO [ BUILD FINISH ] %BUILD_FINISH%
+POPD
+ENDLOCAL

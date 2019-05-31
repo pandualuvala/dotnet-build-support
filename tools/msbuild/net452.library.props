@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType Condition=" '$(OutputType)' == '' ">Library</OutputType>
+    <TargetFrameworkVersion Condition=" '$(TargetFrameworkVersion)' == '' ">v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AppDesignerFolder Condition=" '$(MSBuildProjectExtension)' == '.csproj' ">Properties</AppDesignerFolder>
+	<CodeFileExtension Condition=" '$(MSBuildProjectExtension)' == '.csproj' ">.cs</CodeFileExtension>
+	<CodeFileExtension Condition=" '$(MSBuildProjectExtension)' == '.fsproj' ">.fs</CodeFileExtension>
+	<CodeFileExtension Condition=" '$(MSBuildProjectExtension)' == '.vbproj' ">.vb</CodeFileExtension>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" Condition=" '$(MSBuildProjectExtension)' == '.csproj' " />
+    <Reference Include="System.Numerics" Condition=" '$(MSBuildProjectExtension)' == '.fsproj' " />
+    <Reference Include="System.ValueTuple" Condition=" '$(MSBuildProjectExtension)' == '.fsproj' " />
+    <Reference Include="FSharp.Core" Condition=" '$(MSBuildProjectExtension)' == '.fsproj' " />
+    <Reference Include="Microsoft.VisualBasic" Condition=" '$(MSBuildProjectExtension)' == '.vbproj' " />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(ProjectDir)packages.config" />
+    <None Include="$(ProjectDir)$(AssemblyName).nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(SolutionDir)SharedVersionInfo$(CodeFileExtension)" Condition="Exists('$(SolutionDir)SharedVersionInfo$(CodeFileExtension)')">
+      <Link>SharedVersionInfo$(CodeFileExtension)</Link>
+    </Compile>
+    <Compile Include="$(SolutionDir)SharedAssemblyInfo$(CodeFileExtension)" Condition="Exists('$(SolutionDir)SharedAssemblyInfo$(CodeFileExtension)')">
+      <Link>SharedAssemblyInfo$(CodeFileExtension)</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)AssemblyInfo$(CodeFileExtension)" Condition="Exists('$(ProjectDir)AssemblyInfo$(CodeFileExtension)')" />
+    <Compile Include="$(ProjectDir)Properties\AssemblyInfo$(CodeFileExtension)" Condition="Exists('$(ProjectDir)Properties\AssemblyInfo$(CodeFileExtension)')" />
+    <Compile Include="$(ProjectDir)My Project\AssemblyInfo$(CodeFileExtension)" Condition="Exists('$(ProjectDir)My Project\AssemblyInfo$(CodeFileExtension)')" />
+  </ItemGroup>
+  <Import Project="$(SolutionDir)tools\msbuild\common.props" Condition="Exists('$(SolutionDir)tools\msbuild\common.props')"  />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(MSBuildProjectExtension)' == '.csproj' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.FSharp.targets" Condition=" '$(MSBuildProjectExtension)' == '.fsproj' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" Condition=" '$(MSBuildProjectExtension)' == '.vbproj' " />
+  <PropertyGroup>
+    <PreBuildEvent Condition="Exists('$(SolutionDir)scripts\prebuild.cmd')">CALL "$(SolutionDir)scripts\prebuild.cmd" "$(MSBuildProjectFile)"</PreBuildEvent>
+    <PostBuildEvent Condition="Exists('$(SolutionDir)scripts\postbuild.cmd')">CALL "$(SolutionDir)scripts\postbuild.cmd" "$(MSBuildProjectFile)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

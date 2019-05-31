@@ -1,0 +1,16 @@
+<NUnitProject> 
+  <Settings activeconfig="Debug" processModel="Default" domainUsage="Single" /> 
+  <Config name="Debug"> 
+    <!-- 
+	* To add a include a test project, $id$, in the test the test suite, uncomment the XML below replace $id$ with the id of the .NET test project.  
+	* It is assumed that the the following conventions are followed:
+	  * the test project is located under the "test" top-level directory
+	  * the project folder is named "$id$"
+	  * the output assembly is named "$id$.dll"
+	  * the output path of the msbuild test project is "bin\Debug"
+	* Multiple test projects may be included in this file using this convention
+	
+	<assembly path="test\$id$\bin\Debug\$id$.dll" />
+	-->
+  </Config>
+</NUnitProject>

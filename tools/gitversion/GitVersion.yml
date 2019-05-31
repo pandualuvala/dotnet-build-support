@@ -1,0 +1,32 @@
+assembly-versioning-scheme: MajorMinorPatch
+mode: ContinuousDeployment
+legacy-semver-padding: 3
+build-metadata-padding: 3
+next-version: 0.1.0
+branches:
+  master:
+    regex: (origin[/-])?master
+    tag: ''
+    increment: Patch
+    is-release-branch: true
+    is-mainline: true
+  develop:
+    regex: (origin[/-])?dev(elop)?(ment)?$
+    increment: Minor
+    tag: develop
+  feature:
+    regex: (origin[/-])?features?[/-]
+    tag: useBranchName
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+  release:
+    regex: (origin[/-])?releases?[/-]
+    tag: beta
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    is-release-branch: true

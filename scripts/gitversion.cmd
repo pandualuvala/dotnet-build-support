@@ -1,0 +1,27 @@
+@ECHO OFF 
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+SET DELETE_LOCAL_CONFIG_ON_CLEANUP=0
+SET SOURCE_CONFIG=tools\gitversion\GitVersion.yml
+SET LOCAL_CONFIG=GitVersion.yml
+SET PRERELEASE=1
+
+PUSHD "%~dp0.."
+CALL :EnsureConfig
+CALL "%~dp0nuget-package-tool" "GitVersion.CommandLine" "GitVersion" %*
+CALL :Cleanup
+POPD
+EXIT /B
+
+:EnsureConfig
+IF NOT EXIST %LOCAL_CONFIG% (
+  SET DELETE_LOCAL_CONFIG_ON_CLEANUP=1
+  COPY "%SOURCE_CONFIG%" "%LOCAL_CONFIG%" >NUL
+)
+EXIT /b
+
+:Cleanup
+  IF %DELETE_LOCAL_CONFIG_ON_CLEANUP% EQU 1 (
+	DEL %LOCAL_CONFIG% /Q /F
+  ) 
+EXIT /b

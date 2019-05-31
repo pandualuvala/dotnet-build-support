@@ -1,0 +1,47 @@
+# bin
+*.dll
+*.exe
+*.pdb
+*.log
+*.nupkg
+*.suo
+*.tmp
+*.user
+
+# temp
+*.bk
+*.archive
+*.rar
+*.zip
+*.7za
+
+# work
+[Tt]mp/
+[Tt]emp/
+[Tt]est/run/**
+[Tt]est/report/**
+[Ww]ork/**
+
+# build
+[Aa]rtifact/
+[Aa]rtifacts/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+x64/
+x86/
+
+# tools
+**/.vs
+**/.idea
+**/_ReSharper.Caches
+**/packages/*
+!**/packages/build/
+
+# local dev
+/docfx.json
+/GitVersion.yml
+/NuGet.Config
+/test-suite.nunit
